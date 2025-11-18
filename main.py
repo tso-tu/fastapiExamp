@@ -45,13 +45,13 @@ async def shutdown():
 async def root():
     return {"message": "Hello World"}
 
-@app.get("/items/{item_id}")
-async def read_item(item_id: int, q: Optional[str] = None):
+@app.get("/items/{id}")
+async def read_item(id: int, q: Optional[str] = None):
     async with AsyncSessionLocal() as session:
         result = await session.get(Item, item_id)
         if not result:
             raise HTTPException(status_code=404, detail="Item not found")
-        return {"item_id": result.id, "name": result.name, "description": result.description, "q": q}
+        return {"id": result.id, "name": result.name, "description": result.description, "q": q}
 
 @app.post("/items/")
 async def create_item(name: str, description: Optional[str] = None):

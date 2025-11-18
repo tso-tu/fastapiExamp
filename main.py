@@ -54,9 +54,9 @@ async def read_item(item_id: int, q: Optional[str] = None):
         return {"item_id": result.id, "name": result.name, "description": result.description, "q": q}
 
 @app.post("/items/")
-async def create_item(id: int, name: str, description: Optional[str] = None):
+async def create_item(name: str, description: Optional[str] = None):
     async with AsyncSessionLocal() as session:
-        item = Item(id=id, name=name, description=description)
+        item = Item(name=name, description=description)
         session.add(item)
         await session.commit()
         await session.refresh(item)
